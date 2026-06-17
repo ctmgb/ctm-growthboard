@@ -6,11 +6,13 @@ import BottomNav from "@/components/layout/BottomNav";
 import FloatingButton from "@/components/layout/FloatingButton";
 
 import AICoach from "@/components/dashboard/AICoach";
+import TaskList from "@/components/dashboard/TaskList";
 import ProgressCard from "@/components/dashboard/ProgressCard";
 import PoleCard from "@/components/dashboard/PoleCard";
 import MissionCard from "@/components/dashboard/MissionCard";
-import TaskList from "@/components/dashboard/TaskList";
 import ExecutiveScore from "@/components/dashboard/ExecutiveScore";
+import WeeklyIncomeCard from "@/components/dashboard/WeeklyIncomeCard";
+import NotificationsCard from "@/components/dashboard/NotificationsCard";
 
 export default function Home() {
   return (
@@ -18,7 +20,7 @@ export default function Home() {
       <Header />
 
       <PageContainer>
-        <div className="space-y-4">
+        <div className="space-y-5">
           <AICoach />
 
           <TaskList />
@@ -30,6 +32,10 @@ export default function Home() {
           <MissionCard />
 
           <ExecutiveScore />
+
+          <WeeklyIncomeCard />
+
+          <NotificationsCard />
         </div>
       </PageContainer>
 

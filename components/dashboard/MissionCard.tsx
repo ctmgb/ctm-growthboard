@@ -1,61 +1,140 @@
 
-type MissionCardProps = {
-  missionScore?: number;
-  recommendedFocus?: string;
-  potentialGain?: string;
+
+"use client";
+
+import { useEffect, useState } from "react";
+
+const API_BASE =
+  "https://script.google.com/macros/s/AKfycbzarpqRQb7wchRh9H0RQ697PM090Ar51mp5uCpgwiOAVRE42GPU-c1YizIOb8fVNmqt_Q/exec";
+
+const TOTAL_PAIRS = 234;
+
+type MissionState = {
+  completedPairs: number;
+  remainingPairs: number;
+  completionPercentage: number;
 };
 
-export default function MissionCard({
-  missionScore = 86,
-  recommendedFocus = "Strengthen LR Branch",
-  potentialGain = "+12 Pairs",
-}: MissionCardProps) {
-  const score = Math.max(0, Math.min(100, missionScore));
+const FALLBACK: MissionState = {
+  completedPairs: 1,
+  remainingPairs: 233,
+  completionPercentage: 0.43,
+};
+
+export default function MissionCard() {
+  const [mission, setMission] =
+    useState<MissionState>(FALLBACK);
+
+  const [loading, setLoading] =
+    useState(true);
+
+  useEffect(() => {
+    async function loadMission() {
+      try {
+        const response = await fetch(
+          `${API_BASE}?action=dashboard`,
+          {
+            cache: "no-store",
+          }
+        );
+
+        const json = await response.json();
+
+        if (json.success && json.data?.pairs) {
+          const pairs = json.data.pairs;
+
+          setMission({
+            completedPairs:
+              Number(
+                pairs.completedPairs ?? 0
+              ),
+
+            remainingPairs:
+              Number(
+                pairs.remainingPairs ??
+                  TOTAL_PAIRS
+              ),
+
+            completionPercentage:
+              Number(
+                pairs.missionPercentage ?? 0
+              ),
+          });
+        }
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    loadMission();
+  }, []);
+
+  const width = Math.min(
+    mission.completionPercentage,
+    100
+  );
 
   return (
     <section className="ctm-card">
       <div className="flex items-center justify-between">
-        <h3 className="text-lg font-bold">🎯 Mission Control</h3>
-        <span className="rounded-full bg-blue-100 px-3 py-1 text-sm font-semibold text-blue-700">
-          {score}/100
+        <h3 className="text-lg font-bold">
+          🎯 234-Pair Mission
+        </h3>
+
+        <span className="text-sm text-slate-500">
+          {loading
+            ? "Loading..."
+            : `${mission.completionPercentage.toFixed(
+                2
+              )}%`}
         </span>
       </div>
 
-      <div className="mt-4">
-        <div className="h-3 w-full overflow-hidden rounded-full bg-slate-200">
+      <div className="mt-5">
+        <div className="flex items-end justify-between">
+          <div>
+            <div className="text-3xl font-extrabold">
+              {mission.completedPairs}
+            </div>
+
+            <div className="text-sm text-slate-500">
+              Completed Pairs
+            </div>
+          </div>
+
+          <div className="text-right">
+            <div className="text-xl font-bold text-orange-600">
+              {mission.remainingPairs}
+            </div>
+
+            <div className="text-sm text-slate-500">
+              Remaining
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-5 h-4 overflow-hidden rounded-full bg-slate-200">
           <div
-            className="h-full rounded-full bg-blue-600 transition-all duration-500"
-            style={{ width: `${score}%` }}
+            className="h-full rounded-full bg-emerald-600 transition-all duration-500"
+            style={{
+              width: `${width}%`,
+            }}
           />
         </div>
-      </div>
 
-      <div className="mt-5 space-y-3">
-        <div>
-          <p className="text-xs uppercase tracking-wide text-slate-500">
-            Recommended Focus
+        <div className="mt-4 rounded-2xl bg-blue-50 p-3">
+          <p className="text-sm font-semibold text-blue-800">
+            🚀 Recommended Focus
           </p>
-          <p className="font-semibold text-slate-900">
-            {recommendedFocus}
-          </p>
-        </div>
 
-        <div>
-          <p className="text-xs uppercase tracking-wide text-slate-500">
-            Potential Benefit
-          </p>
-          <p className="font-semibold text-emerald-600">
-            {potentialGain}
+          <p className="mt-1 text-sm text-slate-700">
+            Strengthen the weaker branch to
+            accelerate balanced pair completion.
           </p>
         </div>
       </div>
-
-      <button
-        type="button"
-        className="mt-5 w-full rounded-xl bg-blue-600 px-4 py-2 font-semibold text-white transition hover:bg-blue-700"
-      >
-        View Details
-      </button>
     </section>
   );
 }

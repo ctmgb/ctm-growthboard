@@ -19,34 +19,32 @@ export async function POST(request: NextRequest) {
 
     const payload = await request.json();
 
-    const response = await fetch(APPS_SCRIPT_URL, {
-      method: "POST",
-      headers: {
-        "Content-Type": "text/plain;charset=utf-8",
-      },
-      body: JSON.stringify({
-        action: "registerMember",
-        ...payload,
-      }),
-      cache: "no-store",
+    const params = new URLSearchParams({
+      action: "registerMember",
+      fullName: payload.fullName ?? "",
+      mobile: payload.mobile ?? "",
+      email: payload.email ?? "",
     });
 
-    const text = await response.text();
+    const response = await fetch(
+      `${APPS_SCRIPT_URL}?${params.toString()}`,
+      {
+        method: "GET",
+        cache: "no-store",
+      }
+    );
 
-    let data: unknown;
-
-    try {
-      data = JSON.parse(text);
-    } catch {
+    if (!response.ok) {
       return NextResponse.json(
         {
           success: false,
-          error: "Invalid response received from Apps Script.",
-          raw: text,
+          error: `Apps Script returned HTTP ${response.status}`,
         },
         { status: 502 }
       );
     }
+
+    const data = await response.json();
 
     return NextResponse.json(data);
   } catch (error) {

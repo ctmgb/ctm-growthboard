@@ -2,7 +2,7 @@
 
 "use client";
 
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 
 import { onboardingSlides } from "./data";
@@ -10,6 +10,11 @@ import OnboardingSlide from "./components/onboarding-slide";
 
 export default function OnboardingPage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+
+  const referralBusinessId =
+    searchParams.get("ref")?.trim() ?? "";
+
   const [index, setIndex] = useState(0);
 
   const total = onboardingSlides.length;
@@ -17,7 +22,16 @@ export default function OnboardingPage() {
 
   function handleNext() {
     if (index === total - 1) {
-      router.push("/register");
+      if (referralBusinessId) {
+        router.push(
+          `/register?ref=${encodeURIComponent(
+            referralBusinessId
+          )}`
+        );
+      } else {
+        router.push("/register");
+      }
+
       return;
     }
 

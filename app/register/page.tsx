@@ -2,10 +2,10 @@
 
 "use client";
 
+import { Suspense, useState } from "react";
 import { useSearchParams } from "next/navigation";
-import { useState } from "react";
 
-export default function RegisterPage() {
+function RegisterForm() {
   const searchParams = useSearchParams();
 
   const referralId = searchParams.get("ref") ?? "";
@@ -35,7 +35,6 @@ export default function RegisterPage() {
   ) {
     e.preventDefault();
 
-    // Backend integration will be connected in the next step.
     window.location.href =
       "/registration-success";
   }
@@ -43,7 +42,6 @@ export default function RegisterPage() {
   return (
     <main className="min-h-screen bg-gray-50 flex items-center justify-center px-4 py-10">
       <div className="w-full max-w-xl rounded-3xl border border-gray-200 bg-white p-8 shadow-xl">
-
         <div className="mb-8 text-center">
           <div className="text-5xl">📝</div>
 
@@ -74,10 +72,7 @@ export default function RegisterPage() {
             required
             value={form.name}
             onChange={(e) =>
-              updateField(
-                "name",
-                e.target.value
-              )
+              updateField("name", e.target.value)
             }
             placeholder="Full Name"
             className="w-full rounded-xl border p-3"
@@ -87,10 +82,7 @@ export default function RegisterPage() {
             required
             value={form.mobile}
             onChange={(e) =>
-              updateField(
-                "mobile",
-                e.target.value
-              )
+              updateField("mobile", e.target.value)
             }
             placeholder="Mobile Number"
             className="w-full rounded-xl border p-3"
@@ -101,10 +93,7 @@ export default function RegisterPage() {
             type="email"
             value={form.email}
             onChange={(e) =>
-              updateField(
-                "email",
-                e.target.value
-              )
+              updateField("email", e.target.value)
             }
             placeholder="Email Address"
             className="w-full rounded-xl border p-3"
@@ -127,10 +116,7 @@ export default function RegisterPage() {
             required
             value={form.place}
             onChange={(e) =>
-              updateField(
-                "place",
-                e.target.value
-              )
+              updateField("place", e.target.value)
             }
             placeholder="Place"
             className="w-full rounded-xl border p-3"
@@ -177,13 +163,36 @@ export default function RegisterPage() {
 
           <ul className="mt-2 list-disc space-y-1 pl-5">
             <li>PAN profile will be created.</li>
-            <li>Three Business IDs will be generated automatically.</li>
-            <li>Your sponsor relationship will be preserved.</li>
-            <li>The CTM Placement Engine will assign your position.</li>
+            <li>
+              Three Business IDs will be generated
+              automatically.
+            </li>
+            <li>
+              Your sponsor relationship will be
+              preserved.
+            </li>
+            <li>
+              The CTM Placement Engine will assign
+              your position.
+            </li>
           </ul>
         </div>
       </div>
     </main>
+  );
+}
+
+export default function RegisterPage() {
+  return (
+    <Suspense
+      fallback={
+        <main className="min-h-screen flex items-center justify-center">
+          Loading registration...
+        </main>
+      }
+    >
+      <RegisterForm />
+    </Suspense>
   );
 }
 

@@ -1,251 +1,186 @@
 
 
-// FILE: services/sheets.ts
+// FILE: services/api.ts
 
 "use client";
 
-/**
- * ============================================================
- * CTM GrowthBoard
- * Google Sheets Service Layer
- * ------------------------------------------------------------
- * This service provides strongly typed wrappers around the
- * Google Apps Script API and the frozen 19-sheet architecture.
- *
- * Frontend  : Next.js 16
- * Backend   : Google Apps Script
- * Database  : Google Sheets (19 locked worksheets)
- * ============================================================
- */
+const API_BASE =
+  process.env.NEXT_PUBLIC_API_URL ?? "";
 
-import api from "./api";
-
-/* ============================================================
-   Frozen Sheet Names
-   ============================================================ */
-
-export const SHEETS = {
-  SETTINGS: "Settings",
-  MEMBERS: "Members",
-  BUSINESS_IDS: "Business IDs",
-  GENEALOGY: "Genealogy",
-  PROSPECTS: "Prospects",
-  WEEKLY_ACTIVATIONS: "Weekly Activations",
-  BV_LEDGER: "BV Ledger",
-  PAIR_LEDGER: "Pair Ledger",
-  LEADERSHIP: "Leadership",
-  MISSION_PROGRESS: "Mission Progress",
-  EARNINGS: "Earnings",
-  DAILY_AI_TASKS: "Daily AI Tasks",
-  NOTIFICATIONS: "Notifications",
-  LEADERBOARD: "Leaderboard",
-  AUDIT_LOG: "Audit Log",
-  REFERRALS: "Referrals",
-  API_LOG: "API Log",
-  AI_RECOMMENDATION_HISTORY:
-    "AI Recommendation History",
-  DASHBOARD_CACHE: "Dashboard Cache",
-} as const;
-
-/* ============================================================
-   Dashboard
-   ============================================================ */
-
-export async function fetchDashboard() {
-  const response = await api.getDashboard();
-  return response.data;
+export interface ApiResponse<T = unknown> {
+  success: boolean;
+  data?: T;
+  error?: string;
+  message?: string;
 }
 
-/* ============================================================
-   Members
-   ============================================================ */
+async function request<T>(
+  action: string,
+  payload?: unknown
+): Promise<ApiResponse<T>> {
+  if (!API_BASE) {
+    throw new Error(
+      "NEXT_PUBLIC_API_URL is not configured."
+    );
+  }
 
-export async function fetchMembers() {
-  const response = await api.getMembers();
-  return response.data;
+  const url = `${API_BASE}?action=${action}`;
+
+  const response = await fetch(url, {
+    method: payload ? "POST" : "GET",
+    cache: "no-store",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: payload
+      ? JSON.stringify(payload)
+      : undefined,
+  });
+
+  if (!response.ok) {
+    throw new Error(`HTTP ${response.status}`);
+  }
+
+  return response.json();
 }
 
-export async function fetchMember(
-  memberId: string
-) {
-  const response = await api.getMember(memberId);
-  return response.data;
-}
+const api = {
+  // --------------------------------------------------
+  // Health
+  // --------------------------------------------------
 
-export async function createMember(
-  payload: unknown
-) {
-  const response = await api.createMember(
-    payload
-  );
-  return response.data;
-}
+  ping() {
+    return request("ping");
+  },
 
-export async function updateMember(
-  payload: unknown
-) {
-  const response = await api.updateMember(
-    payload
-  );
-  return response.data;
-}
+  // --------------------------------------------------
+  // Dashboard
+  // --------------------------------------------------
 
-/* ============================================================
-   Prospects
-   ============================================================ */
+  getDashboard() {
+    return request("dashboard");
+  },
 
-export async function fetchProspects() {
-  const response = await api.getProspects();
-  return response.data;
-}
+  // --------------------------------------------------
+  // Members
+  // --------------------------------------------------
 
-export async function createProspect(
-  payload: unknown
-) {
-  const response =
-    await api.createProspect(payload);
+  getMembers() {
+    return request("members");
+  },
 
-  return response.data;
-}
+  getMember(memberId: string) {
+    return request(
+      `member&id=${encodeURIComponent(memberId)}`
+    );
+  },
 
-export async function convertProspect(
-  payload: unknown
-) {
-  const response =
-    await api.convertProspect(payload);
+  createMember(payload: unknown) {
+    return request("createMember", payload);
+  },
 
-  return response.data;
-}
+  updateMember(payload: unknown) {
+    return request("updateMember", payload);
+  },
 
-/* ============================================================
-   Network / Placement
-   ============================================================ */
+  // --------------------------------------------------
+  // Prospects
+  // --------------------------------------------------
 
-export async function fetchGenealogy(
-  memberId: string
-) {
-  const response =
-    await api.getGenealogy(memberId);
+  getProspects() {
+    return request("prospects");
+  },
 
-  return response.data;
-}
+  createProspect(payload: unknown) {
+    return request("createProspect", payload);
+  },
 
-export async function fetchPlacement(
-  memberId: string
-) {
-  const response =
-    await api.getPlacement(memberId);
+  convertProspect(payload: unknown) {
+    return request("convertProspect", payload);
+  },
 
-  return response.data;
-}
+  // --------------------------------------------------
+  // Network
+  // --------------------------------------------------
 
-/* ============================================================
-   Leadership
-   ============================================================ */
+  getGenealogy(memberId: string) {
+    return request(
+      `genealogy&id=${encodeURIComponent(memberId)}`
+    );
+  },
 
-export async function fetchLeadership(
-  memberId: string
-) {
-  const response =
-    await api.getLeadership(memberId);
+  getPlacement(memberId: string) {
+    return request(
+      `placement&id=${encodeURIComponent(memberId)}`
+    );
+  },
 
-  return response.data;
-}
+  // --------------------------------------------------
+  // Leadership
+  // --------------------------------------------------
 
-/* ============================================================
-   Mission
-   ============================================================ */
+  getLeadership(memberId: string) {
+    return request(
+      `leadership&id=${encodeURIComponent(memberId)}`
+    );
+  },
 
-export async function fetchMission(
-  memberId: string
-) {
-  const response =
-    await api.getMission(memberId);
+  // --------------------------------------------------
+  // Mission
+  // --------------------------------------------------
 
-  return response.data;
-}
+  getMission(memberId: string) {
+    return request(
+      `mission&id=${encodeURIComponent(memberId)}`
+    );
+  },
 
-/* ============================================================
-   Earnings
-   ============================================================ */
+  // --------------------------------------------------
+  // Earnings
+  // --------------------------------------------------
 
-export async function fetchEarnings(
-  memberId: string
-) {
-  const response =
-    await api.getEarnings(memberId);
+  getEarnings(memberId: string) {
+    return request(
+      `earnings&id=${encodeURIComponent(memberId)}`
+    );
+  },
 
-  return response.data;
-}
+  // --------------------------------------------------
+  // AI
+  // --------------------------------------------------
 
-/* ============================================================
-   AI
-   ============================================================ */
+  getAIRecommendations(memberId: string) {
+    return request(
+      `aiRecommendations&id=${encodeURIComponent(
+        memberId
+      )}`
+    );
+  },
 
-export async function fetchAIRecommendations(
-  memberId: string
-) {
-  const response =
-    await api.getAIRecommendations(memberId);
+  // --------------------------------------------------
+  // Notifications
+  // --------------------------------------------------
 
-  return response.data;
-}
+  getNotifications(memberId?: string) {
+    if (memberId) {
+      return request(
+        `notifications&id=${encodeURIComponent(
+          memberId
+        )}`
+      );
+    }
 
-/* ============================================================
-   Notifications
-   ============================================================ */
+    return request("notifications");
+  },
 
-export async function fetchNotifications(
-  memberId: string
-) {
-  const response =
-    await api.getNotifications(memberId);
+  // --------------------------------------------------
+  // Leaderboard
+  // --------------------------------------------------
 
-  return response.data;
-}
-
-/* ============================================================
-   System Health
-   ============================================================ */
-
-export async function pingBackend() {
-  const response = await api.ping();
-  return response.data;
-}
-
-/* ============================================================
-   Unified Service Export
-   ============================================================ */
-
-const sheetsService = {
-  sheets: SHEETS,
-
-  fetchDashboard,
-
-  fetchMembers,
-  fetchMember,
-  createMember,
-  updateMember,
-
-  fetchProspects,
-  createProspect,
-  convertProspect,
-
-  fetchGenealogy,
-  fetchPlacement,
-
-  fetchLeadership,
-
-  fetchMission,
-
-  fetchEarnings,
-
-  fetchAIRecommendations,
-
-  fetchNotifications,
-
-  pingBackend,
+  getLeaderboard() {
+    return request("leaderboard");
+  },
 };
 
-export default sheetsService;
+export default api;
 

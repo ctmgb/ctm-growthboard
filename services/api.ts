@@ -5,7 +5,7 @@
 "use client";
 
 const API_BASE =
-  process.env.NEXT_PUBLIC_GAS_API_URL ?? "";
+  process.env.NEXT_PUBLIC_API_URL ?? "";
 
 export interface ApiResponse<T = unknown> {
   success: boolean;
@@ -17,8 +17,14 @@ export interface ApiResponse<T = unknown> {
 async function request<T>(
   action: string
 ): Promise<ApiResponse<T>> {
-  const url =
-    `${API_BASE}?action=${encodeURIComponent(action)}`;
+  if (!API_BASE) {
+    throw new Error(
+      "NEXT_PUBLIC_API_URL is not configured."
+    );
+  }
+
+  const separator = action.includes("&") ? "&" : "";
+  const url = `${API_BASE}?action=${action}${separator}`;
 
   const response = await fetch(url, {
     method: "GET",
@@ -26,9 +32,7 @@ async function request<T>(
   });
 
   if (!response.ok) {
-    throw new Error(
-      `HTTP ${response.status}`
-    );
+    throw new Error(`HTTP ${response.status}`);
   }
 
   return response.json();
@@ -45,6 +49,12 @@ const api = {
 
   getMembers() {
     return request("members");
+  },
+
+  getMember(memberId: string) {
+    return request(
+      `member&id=${encodeURIComponent(memberId)}`
+    );
   },
 
   getProspects() {

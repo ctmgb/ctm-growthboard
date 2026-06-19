@@ -13,7 +13,12 @@ export interface RegisterMemberPayload {
   fullName: string;
   mobile: string;
   email: string;
-  referralBusinessId?: string;
+  panNumber: string;
+  place: string;
+  district: string;
+  state: string;
+  pinCode: string;
+  referralBusinessId: string;
 }
 
 const api = {
@@ -29,11 +34,17 @@ const api = {
       body: JSON.stringify(payload),
     });
 
+    const result: ApiResponse = await response.json();
+
     if (!response.ok) {
-      throw new Error(`HTTP ${response.status}`);
+      throw new Error(
+        result.error ??
+          result.message ??
+          `HTTP ${response.status}`
+      );
     }
 
-    return response.json();
+    return result;
   },
 };
 

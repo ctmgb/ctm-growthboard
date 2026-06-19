@@ -4,17 +4,22 @@
 
 "use client";
 
-const API_BASE =
-  process.env.NEXT_PUBLIC_API_URL ?? "";
+const API_BASE = process.env.NEXT_PUBLIC_API_URL ?? "";
 
 export interface ApiResponse<T = unknown> {
   success: boolean;
   data?: T;
-  error?: string;
   message?: string;
+  error?: string;
 }
 
-async function request<T>(
+export interface RegisterMemberPayload {
+  fullName: string;
+  mobile: string;
+  email: string;
+}
+
+async function getRequest<T>(
   action: string
 ): Promise<ApiResponse<T>> {
   if (!API_BASE) {
@@ -23,8 +28,9 @@ async function request<T>(
     );
   }
 
-  const separator = action.includes("&") ? "&" : "";
-  const url = `${API_BASE}?action=${action}${separator}`;
+  const url = `${API_BASE}?action=${encodeURIComponent(
+    action
+  )}`;
 
   const response = await fetch(url, {
     method: "GET",
@@ -32,45 +38,110 @@ async function request<T>(
   });
 
   if (!response.ok) {
-    throw new Error(`HTTP ${response.status}`);
+    throw new Error(
+      `HTTP ${response.status}`
+    );
+  }
+
+  return response.json();
+}
+
+async function postRequest<T>(
+  body: Record<string, unknown>
+): Promise<ApiResponse<T>> {
+  if (!API_BASE) {
+    throw new Error(
+      "NEXT_PUBLIC_API_URL is not configured."
+    );
+  }
+
+  const response = await fetch(API_BASE, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(body),
+  });
+
+  if (!response.ok) {
+    throw new Error(
+      `HTTP ${response.status}`
+    );
   }
 
   return response.json();
 }
 
 const api = {
+  // -------------------------------------------------
+  // Health
+  // -------------------------------------------------
+
   ping() {
-    return request("ping");
+    return getRequest("ping");
   },
+
+  // -------------------------------------------------
+  // Dashboard
+  // -------------------------------------------------
 
   getDashboard() {
-    return request("dashboard");
+    return getRequest("dashboard");
   },
 
+  // -------------------------------------------------
+  // Members
+  // -------------------------------------------------
+
   getMembers() {
-    return request("members");
+    return getRequest("members");
   },
 
   getMember(memberId: string) {
-    return request(
+    return getRequest(
       `member&id=${encodeURIComponent(memberId)}`
     );
   },
 
-  getProspects() {
-    return request("prospects");
+  registerMember(
+    payload: RegisterMemberPayload
+  ) {
+    return postRequest({
+      action: "registerMember",
+      ...payload,
+    });
   },
+
+  // -------------------------------------------------
+  // Prospects
+  // -------------------------------------------------
+
+  getProspects() {
+    return getRequest("prospects");
+  },
+
+  // -------------------------------------------------
+  // Tasks
+  // -------------------------------------------------
 
   getTasks() {
-    return request("tasks");
+    return getRequest("tasks");
   },
+
+  // -------------------------------------------------
+  // Notifications
+  // -------------------------------------------------
 
   getNotifications() {
-    return request("notifications");
+    return getRequest("notifications");
   },
 
+  // -------------------------------------------------
+  // Leaderboard
+  // -------------------------------------------------
+
   getLeaderboard() {
-    return request("leaderboard");
+    return getRequest("leaderboard");
   },
 };
 

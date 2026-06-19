@@ -1,7 +1,5 @@
 
 
-// FILE: services/api.ts
-
 "use client";
 
 const API_BASE = process.env.NEXT_PUBLIC_API_URL ?? "";
@@ -38,35 +36,7 @@ async function getRequest<T>(
   });
 
   if (!response.ok) {
-    throw new Error(
-      `HTTP ${response.status}`
-    );
-  }
-
-  return response.json();
-}
-
-async function postRequest<T>(
-  body: Record<string, unknown>
-): Promise<ApiResponse<T>> {
-  if (!API_BASE) {
-    throw new Error(
-      "NEXT_PUBLIC_API_URL is not configured."
-    );
-  }
-
-  const response = await fetch(API_BASE, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(body),
-  });
-
-  if (!response.ok) {
-    throw new Error(
-      `HTTP ${response.status}`
-    );
+    throw new Error(`HTTP ${response.status}`);
   }
 
   return response.json();
@@ -103,13 +73,27 @@ const api = {
     );
   },
 
-  registerMember(
+  // -------------------------------------------------
+  // Registration
+  // -------------------------------------------------
+
+  async registerMember(
     payload: RegisterMemberPayload
-  ) {
-    return postRequest({
-      action: "registerMember",
-      ...payload,
+  ): Promise<ApiResponse> {
+    const response = await fetch("/api/register", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      cache: "no-store",
+      body: JSON.stringify(payload),
     });
+
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}`);
+    }
+
+    return response.json();
   },
 
   // -------------------------------------------------

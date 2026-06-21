@@ -1,5 +1,6 @@
 
 
+
 // FILE: app/onboarding/data.ts
 
 export interface OnboardingCard {
@@ -21,206 +22,479 @@ export interface OnboardingSlide {
 export const onboardingSlides: OnboardingSlide[] = [
   {
     id: 1,
-    badge: "✨ Welcome to CTM GrowthBoard",
-    headline: "Build with Clarity. Lead with Confidence.",
+    badge: "🚀 Welcome to CTM GrowthBoard",
+    headline: "Build a Tribe. Follow a System. Scale Your Future.",
     subheadline:
-      "Transform daily effort into measurable progress with an AI-powered business operating system designed for disciplined execution and organized growth.",
+      "CTM GrowthBoard is your AI-powered business operating system that helps you organize, execute, lead, and grow with clarity and confidence.",
 
     cards: [
       {
-        icon: "🎯",
-        title: "Know What Matters Today",
+        icon: "🌱",
+        title: "Start with One Step",
         description:
-          "Receive clear priorities that help you focus on the activities with the greatest impact.",
+          "Every successful leader begins with a single decision to take consistent action.",
       },
       {
-        icon: "👥",
-        title: "Stay Organized",
+        icon: "🤝",
+        title: "Build Through Relationships",
         description:
-          "Keep prospects, registrations, follow-ups, and leadership activities in one place.",
+          "Grow by serving people, mentoring leaders, and creating lasting connections.",
       },
       {
-        icon: "📊",
-        title: "Measure Progress",
+        icon: "📈",
+        title: "Follow a Proven System",
         description:
-          "View meaningful dashboards that help you understand where you are and what to improve next.",
+          "Replace guesswork with a structured roadmap designed for measurable progress.",
       },
     ],
 
     quote:
-      "Success is built through consistent, well-directed action repeated over time.",
+      "Build with purpose. Execute with discipline. Grow with confidence.",
 
-    cta: "Continue",
+    cta: "See Why Systems Win",
   },
 
   {
     id: 2,
-    badge: "⏰ Your Commitment",
-    headline: "Simple Daily Actions Create Extraordinary Results.",
+    badge: "💡 Why People Struggle",
+    headline: "Hard Work Alone Is Not Enough.",
     subheadline:
-      "CTM is designed to support disciplined execution. Your consistency is the foundation of long-term progress.",
+      "Many people stay busy but fail to build momentum because they lack structure, priorities, and consistent execution.",
 
     cards: [
       {
-        icon: "⌛",
-        title: "Time Commitment",
+        icon: "❌",
+        title: "Scattered Activities",
         description:
-          "Complete onboarding once, then dedicate regular time to planning, prospecting, follow-up, and mentoring based on your goals.",
+          "Without a clear system, daily efforts often produce inconsistent results.",
       },
       {
-        icon: "💼",
-        title: "Your Responsibilities",
+        icon: "🎯",
+        title: "Missing Priorities",
         description:
-          "Build relationships, maintain accurate records, follow up consistently, and lead your team with integrity.",
+          "Knowing the next best action is often more valuable than working longer hours.",
       },
       {
-        icon: "💡",
-        title: "Financial Transparency",
+        icon: "🤖",
+        title: "CTM Brings Clarity",
         description:
-          "Any applicable fees, purchases, or ongoing commitments should be clearly disclosed before participation.",
+          "AI guidance and organized workflows help transform effort into meaningful progress.",
       },
     ],
 
     quote:
-      "Consistency matters more than intensity.",
+      "Success is not accidental—it is the result of disciplined execution.",
 
-    cta: "Continue",
+    cta: "Understand the Success Formula",
   },
 
   {
     id: 3,
-    badge: "🤖 Intelligent Assistance",
-    headline: "Focus on People. Let CTM Handle the Complexity.",
+    badge: "🎯 CTM Success Formula",
+    headline: "Simple Inputs. Measurable Progress.",
     subheadline:
-      "Spend less time organizing information and more time building relationships and executing meaningful work.",
+      "CTM converts consistent daily inputs into visible business growth and leadership development.",
 
     cards: [
       {
-        icon: "🤖",
-        title: "AI Guidance",
+        icon: "⏰",
+        title: "Invest Time & Effort",
         description:
-          "Receive intelligent recommendations that help prioritize your next actions.",
+          "Dedicate focused time and execute important activities consistently.",
       },
       {
-        icon: "📋",
-        title: "Smart CRM",
+        icon: "👥",
+        title: "Build People",
         description:
-          "Track prospects and follow-ups through an organized workflow.",
+          "Prospects, customers, distributors, and leaders are the foundation of long-term growth.",
+      },
+      {
+        icon: "📚",
+        title: "Keep Learning",
+        description:
+          "Continuous improvement strengthens leadership, communication, and execution.",
+      },
+    ],
+
+    quote:
+      "Consistent inputs create sustainable outcomes.",
+
+    cta: "Discover Your Three Business IDs",
+  },
+
+  {
+    id: 4,
+    badge: "👑 Three Business IDs",
+    headline: "One Registration. Three Independent Business IDs.",
+    subheadline:
+      "Your journey begins with a structured foundation designed to support balanced and scalable growth.",
+
+    cards: [
+      {
+        icon: "👑",
+        title: "ID-1 (Top Pole)",
+        description:
+          "Your primary Business ID forms the foundation of your organization.",
+      },
+      {
+        icon: "⬅️",
+        title: "ID-2 (Left Pole)",
+        description:
+          "An independent Business ID supporting structured expansion.",
+      },
+      {
+        icon: "➡️",
+        title: "ID-3 (Right Pole)",
+        description:
+          "A third Business ID that grows independently within your overall strategy.",
+      },
+    ],
+
+    quote:
+      "One vision. Three business centers. Unlimited opportunity to lead responsibly.",
+
+    cta: "See Your First Week",
+  },
+
+  {
+    id: 5,
+    badge: "🗓️ Your First Week",
+    headline: "Getting Started Is Simple.",
+    subheadline:
+      "Complete registration, activate your business, and begin building with confidence.",
+
+    cards: [
+      {
+        icon: "📝",
+        title: "Register",
+        description:
+          "Complete your profile and join the CTM ecosystem.",
+      },
+      {
+        icon: "🆔",
+        title: "Receive Your IDs",
+        description:
+          "Your Business IDs are generated as part of the onboarding process.",
+      },
+      {
+        icon: "🚀",
+        title: "Begin Building",
+        description:
+          "Activate and start developing your network using the CTM system.",
+      },
+    ],
+
+    quote:
+      "The first step is often the most important one.",
+
+    cta: "Learn the Daily Workflow",
+  },
+
+  {
+    id: 6,
+    badge: "🔄 Daily Growth Engine",
+    headline: "Small Daily Actions Create Big Results.",
+    subheadline:
+      "Consistency compounds. Repeat the core activities every day to build lasting momentum.",
+
+    cards: [
+      {
+        icon: "➕",
+        title: "Add Prospects",
+        description:
+          "Grow your pipeline by connecting with new people regularly.",
+      },
+      {
+        icon: "📞",
+        title: "Follow Up",
+        description:
+          "Maintain relationships through disciplined communication.",
+      },
+      {
+        icon: "🤝",
+        title: "Support & Mentor",
+        description:
+          "Help new members succeed and strengthen your leadership culture.",
+      },
+    ],
+
+    quote:
+      "Daily discipline creates extraordinary long-term results.",
+
+    cta: "See How Leadership Grows",
+  },
+
+  {
+    id: 7,
+    badge: "🌳 Leadership Duplication",
+    headline: "Grow from 10 to 100 to 400 Leaders.",
+    subheadline:
+      "Sustainable growth comes from developing leaders who help others become leaders.",
+
+    cards: [
+      {
+        icon: "🥉",
+        title: "Develop 10 Leaders",
+        description:
+          "Build a strong frontline through coaching and support.",
+      },
+      {
+        icon: "🥈",
+        title: "Expand to 100",
+        description:
+          "Encourage duplication and shared leadership across your organization.",
+      },
+      {
+        icon: "🥇",
+        title: "Scale to 400",
+        description:
+          "Create an independent, self-sustaining leadership network.",
+      },
+    ],
+
+    quote:
+      "Leadership grows when leaders help others grow.",
+
+    cta: "Understand Balanced Growth",
+  },
+
+  {
+    id: 8,
+    badge: "⚖️ Balanced Growth",
+    headline: "Balance Builds Stability.",
+    subheadline:
+      "Healthy organizations strengthen both sides consistently instead of allowing long-term imbalance.",
+
+    cards: [
+      {
+        icon: "⚖️",
+        title: "Monitor Balance",
+        description:
+          "Review organizational health regularly.",
+      },
+      {
+        icon: "🌿",
+        title: "Strengthen Weak Areas",
+        description:
+          "Proactively support branches that need attention.",
+      },
+      {
+        icon: "📊",
+        title: "Track Progress",
+        description:
+          "Use dashboards and insights to make informed decisions.",
+      },
+    ],
+
+    quote:
+      "Sustainable growth depends on balance and discipline.",
+
+    cta: "Explore Your Missions",
+  },
+
+  {
+    id: 9,
+    badge: "🎯 Independent Missions",
+    headline: "Every Business ID Has Its Own Journey.",
+    subheadline:
+      "Track the progress of each Business ID independently while building one unified organization.",
+
+    cards: [
+      {
+        icon: "👑",
+        title: "Top Pole Mission",
+        description:
+          "Monitor and strengthen your primary Business ID.",
+      },
+      {
+        icon: "⬅️",
+        title: "Left Pole Mission",
+        description:
+          "Track independent progress and balanced development.",
+      },
+      {
+        icon: "➡️",
+        title: "Right Pole Mission",
+        description:
+          "Maintain visibility and momentum across all Business IDs.",
+      },
+    ],
+
+    quote:
+      "Clear milestones make long-term progress easier to achieve.",
+
+    cta: "Meet Your AI Coach",
+  },
+
+  {
+    id: 10,
+    badge: "🤖 AI Coach",
+    headline: "Know Exactly What To Do Next.",
+    subheadline:
+      "CTM highlights your highest-impact actions so you can focus on execution instead of guesswork.",
+
+    cards: [
+      {
+        icon: "📋",
+        title: "Today's Priorities",
+        description:
+          "Receive a focused list of meaningful tasks.",
       },
       {
         icon: "🔔",
         title: "Helpful Reminders",
         description:
-          "Stay informed about important tasks and opportunities without relying on memory.",
+          "Stay on top of follow-ups and important opportunities.",
+      },
+      {
+        icon: "📈",
+        title: "Actionable Insights",
+        description:
+          "Understand where your attention creates the greatest value.",
       },
     ],
 
     quote:
-      "Clarity enables better decisions.",
+      "Clarity improves execution.",
 
-    cta: "Continue",
+    cta: "Celebrate Your Progress",
   },
 
   {
-    id: 4,
-    badge: "📈 Visibility",
-    headline: "Open the App and Know Exactly Where You Stand.",
+    id: 11,
+    badge: "🏆 Achievements",
+    headline: "Every Milestone Matters.",
     subheadline:
-      "CTM converts activity into dashboards and insights that make progress easy to understand.",
+      "Celebrate progress as you develop leaders, improve execution, and build momentum.",
 
     cards: [
       {
-        icon: "📊",
-        title: "Executive Dashboard",
+        icon: "⭐",
+        title: "First Wins",
         description:
-          "Review current priorities and key performance indicators at a glance.",
-      },
-      {
-        icon: "🎯",
-        title: "Mission Tracking",
-        description:
-          "Monitor objectives, milestones, and execution progress.",
+          "Recognize important early accomplishments.",
       },
       {
         icon: "🥇",
-        title: "Leadership Insights",
+        title: "Leadership Milestones",
         description:
-          "Understand team development and growth through structured metrics.",
+          "Track meaningful progress as your organization grows.",
+      },
+      {
+        icon: "🎖️",
+        title: "Stay Motivated",
+        description:
+          "Visible achievements encourage consistent execution.",
       },
     ],
 
     quote:
-      "You cannot improve what you cannot measure.",
+      "Progress deserves recognition.",
 
-    cta: "Continue",
+    cta: "Who Can Succeed?",
   },
 
   {
-    id: 5,
-    badge: "🔒 Integrity & Trust",
-    headline: "Designed for Transparency and Accountability.",
+    id: 12,
+    badge: "🙌 Who CTM Is For",
+    headline: "Built for People Ready to Execute.",
     subheadline:
-      "CTM emphasizes organized records, measurable progress, and responsible leadership.",
+      "Whether you are a professional, entrepreneur, student, or aspiring leader, disciplined action creates opportunity.",
+
+    cards: [
+      {
+        icon: "👨‍💼",
+        title: "Working Professionals",
+        description:
+          "Build consistently alongside your existing commitments.",
+      },
+      {
+        icon: "🚀",
+        title: "Entrepreneurs",
+        description:
+          "Use structure and measurement to organize growth.",
+      },
+      {
+        icon: "🎓",
+        title: "Lifelong Learners",
+        description:
+          "Develop leadership through continuous improvement.",
+      },
+    ],
+
+    quote:
+      "Success begins with the willingness to learn and act.",
+
+    cta: "View the Complete Journey",
+  },
+
+  {
+    id: 13,
+    badge: "🛣️ Your Growth Journey",
+    headline: "See the Roadmap from Start to Scale.",
+    subheadline:
+      "Progress step by step through registration, execution, leadership development, and long-term growth.",
+
+    cards: [
+      {
+        icon: "📝",
+        title: "Join",
+        description:
+          "Complete registration and begin your journey.",
+      },
+      {
+        icon: "🌱",
+        title: "Build",
+        description:
+          "Develop prospects, leaders, and balanced organizations.",
+      },
+      {
+        icon: "📈",
+        title: "Scale",
+        description:
+          "Grow through disciplined execution and duplication.",
+      },
+    ],
+
+    quote:
+      "A clear roadmap makes progress easier to achieve.",
+
+    cta: "Begin Today",
+  },
+
+  {
+    id: 14,
+    badge: "🚀 Start Your Journey",
+    headline: "Your Next Step Starts Now.",
+    subheadline:
+      "You understand the system, the daily workflow, and the path to long-term growth. It's time to create your account and begin.",
 
     cards: [
       {
         icon: "✅",
-        title: "Transparent Tracking",
+        title: "You Know the Formula",
         description:
-          "Important activities and progress remain visible and measurable.",
+          "Understand the principles behind consistent execution.",
       },
       {
-        icon: "🤝",
-        title: "Leadership Responsibility",
+        icon: "✅",
+        title: "You Know the Journey",
         description:
-          "Support your team through ethical conduct and disciplined execution.",
+          "See how daily actions contribute to meaningful progress.",
       },
       {
-        icon: "📱",
-        title: "Accessible Anywhere",
+        icon: "🎉",
+        title: "You're Ready",
         description:
-          "Use CTM from your mobile device to stay connected wherever you are.",
+          "Create your CTM account and start building with confidence.",
       },
     ],
 
     quote:
-      "Trust grows when expectations and actions remain aligned.",
+      "The best time to begin is now.",
 
-    cta: "Continue",
-  },
-
-  {
-    id: 6,
-    badge: "🚀 You're Ready",
-    headline: "Everything You Need to Begin Is Now in Place.",
-    subheadline:
-      "You understand your role, your responsibilities, and how CTM supports organized execution and measurable progress.",
-
-    cards: [
-      {
-        icon: "✔",
-        title: "You Know Your Role",
-        description:
-          "You understand the daily activities expected from a Tribe Leader.",
-      },
-      {
-        icon: "✔",
-        title: "You Know What CTM Provides",
-        description:
-          "AI guidance, dashboards, organized workflows, and progress tracking.",
-      },
-      {
-        icon: "✔",
-        title: "You're Ready to Begin",
-        description:
-          "Complete registration and start using your personalized GrowthBoard.",
-      },
-    ],
-
-    quote:
-      "The best time to build disciplined habits is today.",
-
-    cta: "🚀 Create My Account",
+    cta: "🚀 Create My CTM Account",
   },
 ];
+
 

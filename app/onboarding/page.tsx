@@ -2,18 +2,17 @@
 
 "use client";
 
+import { Suspense, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useState } from "react";
 
 import { onboardingSlides } from "./data";
 import OnboardingSlide from "./components/onboarding-slide";
 
-export default function OnboardingPage() {
+function OnboardingContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  const referralBusinessId =
-    searchParams.get("ref")?.trim() ?? "";
+  const referralBusinessId = searchParams.get("ref")?.trim() ?? "";
 
   const [index, setIndex] = useState(0);
 
@@ -22,16 +21,11 @@ export default function OnboardingPage() {
 
   function handleNext() {
     if (index === total - 1) {
-      if (referralBusinessId) {
-        router.push(
-          `/register?ref=${encodeURIComponent(
-            referralBusinessId
-          )}`
-        );
-      } else {
-        router.push("/register");
-      }
-
+      router.push(
+        referralBusinessId
+          ? `/register?ref=${encodeURIComponent(referralBusinessId)}`
+          : "/register"
+      );
       return;
     }
 
@@ -51,6 +45,14 @@ export default function OnboardingPage() {
       onNext={handleNext}
       isLast={index === total - 1}
     />
+  );
+}
+
+export default function OnboardingPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <OnboardingContent />
+    </Suspense>
   );
 }
 
